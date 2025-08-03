@@ -71,13 +71,14 @@ EXTEND_TOP ~bd1000.bcs~ ~weidu_external/%MOD_FOLDER%/compile/180/d5beenbg.baf~
 <<<<<<<< d5/d5id1105.baf
 IF
 	Global("IWDEET_IWD1_COMPLETE","GLOBAL",1)
-	GlobalGT("Join_Posse","GLOBAL",0)
+	//GlobalGT("Join_Posse","GLOBAL",0)
 	GlobalLT("Been_to_NWN","GLOBAL",1)	//	set this in initial NWN area
 	GlobalLT("Been_to_BG","GLOBAL",1)	//	set this in BG1, SoD, and BG2 areas
 	Global("Move_to_NWN","ID1105",0)
 THEN
 	RESPONSE #100
 		SetGlobal("Move_to_NWN","ID1105",1)
+		SetMasterArea("NW1000")
 		DayNight(8)
 		ApplySpellRES("bdresurr",Player2)  // No such index
 		ApplySpellRES("bdresurr",Player3)  // No such index
@@ -104,7 +105,7 @@ THEN
 		ApplySpell(Player6,RESTORE_FULL_HEALTH)  // SPIN746.SPL (No such index)
 		SetGlobal("NWStandalone","GLOBAL",1)
 		SetGlobal("NWMessenger_of_Neverwinter","GLOBAL",2)
-		SetWorldmap("nwnworld")
+		//SetWorldmap("nwnworld")
 		ClearAllActions()
 		StartCutSceneMode()
 		StartCutSceneEx("NWTON",TRUE)	//	start NWN
