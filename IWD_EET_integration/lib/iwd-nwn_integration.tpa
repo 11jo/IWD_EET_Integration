@@ -71,6 +71,7 @@ EXTEND_TOP ~bd1000.bcs~ ~weidu_external/%MOD_FOLDER%/compile/180/d5beenbg.baf~
 <<<<<<<< d5/d5id1105.baf
 IF
 	Global("IWDEET_IWD1_COMPLETE","GLOBAL",1)
+	//Global("IWDEET_HOW_COMPLETE","GLOBAL",1)
 	//GlobalGT("Join_Posse","GLOBAL",0)
 	GlobalLT("Been_to_NWN","GLOBAL",1)	//	set this in initial NWN area
 	GlobalLT("Been_to_BG","GLOBAL",1)	//	set this in BG1, SoD, and BG2 areas
@@ -113,4 +114,5 @@ END
 >>>>>>>>
 COPY ~d5/d5id1105.baf~ ~weidu_external/%MOD_FOLDER%/compile/180/d5id1105.baf~
 EXTEND_TOP ~id1105.bcs~ ~weidu_external/%MOD_FOLDER%/compile/180/d5id1105.baf~
+EXTEND_TOP ~id9603.bcs~ ~weidu_external/%MOD_FOLDER%/compile/180/d5id1105.baf~
 

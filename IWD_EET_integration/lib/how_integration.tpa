@@ -1,5 +1,6 @@
 ////////////////////
 
+
 // mark real IWD vs IWD in EET
 
 ACTION_IF !(FILE_EXISTS_IN_GAME ~d5__iwd_real.d5~) BEGIN
@@ -340,13 +341,13 @@ ALTER_TRANS D5HJOLL // file name
 APPEND D5HJOLL
 
 IF ~AreaCheck("ID9600") Global("IWDEET_HOW_COMPLETE","GLOBAL",1) Global("D5_HoW_BG2","GLOBAL",2)~ BEGIN d5hjoll_a1
-  SAY ~My friends! The mountain shook and we saw a great spirit rise from it, just as happened to Wylfdene in the Mead Hall. Does this mean you were successful?~
-  IF ~~ REPLY ~Yes. The dragon Icasaracht is no more. Hopefully for good, this time.~ GOTO d5hjoll_a2
-  IF ~~ REPLY ~Seems like that dragon has nine lives. But this one, at least, is over. Or maybe we killed her twice? It's hard to tell.~ GOTO d5hjoll_a2
+  SAY @801000 /*~My friends! The mountain shook and we saw a great spirit rise from it, just as happened to Wylfdene in the Mead Hall. Does this mean you were successful?~*/
+  IF ~~ REPLY @801001 /*~Yes. The dragon Icasaracht is no more. Hopefully for good, this time.~*/ GOTO d5hjoll_a2
+  IF ~~ REPLY @801002 /*~Seems like that dragon has nine lives. But this one, at least, is over. Or maybe we killed her twice? It's hard to tell.~*/ GOTO d5hjoll_a2
 END
 
 IF ~~ BEGIN d5hjoll_a2
-  SAY ~That is very good news. No the corruption of my people will cease. I think you on behalf of our tribes. I will let them know that some southerners have strong hearts. And now, I will return you to your southern town. Goodbye friends.~
+  SAY @801003 /*~That is very good news. No the corruption of my people will cease. I think you on behalf of our tribes. I will let them know that some southerners have strong hearts. And now, I will return you to your southern town. Goodbye friends.~*/
   IF ~~ 
     DO ~SetGlobal("D5_HoW_BG2","GLOBAL",3)
   		StartCutSceneMode()
@@ -400,12 +401,93 @@ IF_EXISTS BUT_ONLY
 
 // make XP rewards in HoW reactive to how you got there (less xp from BG2, more from IWD)
 
+
 ACTION_IF (MOD_IS_INSTALLED ~SETUP-IWD1_EET.TP2~ ~1~) BEGIN
-  COPY ~%MOD_FOLDER%/data/copy/id9200.bcs~ ~override~
-  COPY ~%MOD_FOLDER%/data/copy/ildrgdie.bcs~ ~override~
-  COPY ~%MOD_FOLDER%/data/copy/ilgemded.bcs~ ~override~
-  COPY ~%MOD_FOLDER%/data/copy/ilgemeff.bcs~ ~override~
-  COPY ~%MOD_FOLDER%/data/copy/idlu2109.bcs~ ~override~
+
+
+  COPY - ~weidu.conf~ ~.../weidu.conf~
+    READ_2DA_ENTRY 0 2 3 "IWD_EET_integration_language"
+
+	PRINT ~Game in %IWD_EET_integration_language%...
+~
+
+		WITH_TRA "IWD1_EET/lang/%LANGUAGE%/dialog.TRA"
+					"IWD1_EET/lang/%IWD_EET_integration_language%/dialog.TRA" BEGIN
+    OUTER_SET ilgemeff_strref = RESOLVE_STR_REF(@26824)
+    OUTER_SET ilgemded_strref = RESOLVE_STR_REF(@26728)
+    OUTER_SET id9200_goblin_strref = RESOLVE_STR_REF(@26812)
+    OUTER_SET id9200_skeleton_strref = RESOLVE_STR_REF(@26819)
+	END
+
+  //COPY ~%MOD_FOLDER%/data/copy/id9200.bcs~ ~override~
+EXTEND_TOP ~id9200.bcs~ ~%MOD_FOLDER%/data/copy/id9200.baf~ EVALUATE_BUFFER
+
+  //COPY ~%MOD_FOLDER%/data/copy/ildrgdie.bcs~ ~override~
+COPY_EXISTING ~ildrgdie.bcs~ ~weidu_external/%MOD_FOLDER%/data/copy/ildrgdie.baf~
+		DECOMPILE_BCS_TO_BAF
+		SPRINT textToReplace ~True()~
+		COUNT_REGEXP_INSTANCES ~%textToReplace%~ num_matches
+		PATCH_IF (num_matches > 0) BEGIN	
+REPLACE_TEXTUALLY ~%textToReplace%~ ~Global("D5_IWD_REAL","GLOBAL",1)~
+			PATCH_PRINT ~Patching: %num_matches% matches found in %SOURCE_FILESPEC% for REPLACE_TEXTUALLY: %textToReplace%~
+			PATCH_PRINT ~... // Global("D5_IWD_REAL","GLOBAL",1) added
+			~
+		END ELSE BEGIN
+			PATCH_WARN ~WARNING: could not find %textToReplace% in %SOURCE_FILESPEC%~
+		END
+
+  //COPY ~%MOD_FOLDER%/data/copy/ilgemded.bcs~ ~override~
+COPY_EXISTING ~ilgemded.bcs~ ~weidu_external/%MOD_FOLDER%/data/copy/ilgemded.baf~
+		DECOMPILE_BCS_TO_BAF
+		SPRINT textToReplace ~True()~
+		COUNT_REGEXP_INSTANCES ~%textToReplace%~ num_matches
+		PATCH_IF (num_matches > 0) BEGIN	
+REPLACE_TEXTUALLY ~%textToReplace%~ ~Global("D5_IWD_REAL","GLOBAL",1)~
+			PATCH_PRINT ~Patching: %num_matches% matches found in %SOURCE_FILESPEC% for REPLACE_TEXTUALLY: %textToReplace%~
+			PATCH_PRINT ~... // Global("D5_IWD_REAL","GLOBAL",1) added
+			~
+		END ELSE BEGIN
+			PATCH_WARN ~WARNING: could not find %textToReplace% in %SOURCE_FILESPEC%~
+		END
+
+  //COPY ~%MOD_FOLDER%/data/copy/ilgemeff.bcs~ ~override~
+COPY_EXISTING ~ilgemeff.bcs~ ~weidu_external/%MOD_FOLDER%/data/copy/ilgemeff.baf~
+		DECOMPILE_BCS_TO_BAF
+		SPRINT textToReplace ~True()~
+		COUNT_REGEXP_INSTANCES ~%textToReplace%~ num_matches
+		PATCH_IF (num_matches > 0) BEGIN	
+REPLACE_TEXTUALLY ~%textToReplace%~ ~Global("D5_IWD_REAL","GLOBAL",1)~
+			PATCH_PRINT ~Patching: %num_matches% matches found in %SOURCE_FILESPEC% for REPLACE_TEXTUALLY: %textToReplace%~
+			PATCH_PRINT ~... // Global("D5_IWD_REAL","GLOBAL",1) added
+			~
+		END ELSE BEGIN
+			PATCH_WARN ~WARNING: could not find %textToReplace% in %SOURCE_FILESPEC%~
+		END
+
+  //COPY ~%MOD_FOLDER%/data/copy/idlu2109.bcs~ ~override~ 
+COPY_EXISTING ~idlu2109.bcs~ ~weidu_external/%MOD_FOLDER%/data/copy/idlu2109.baf~
+		DECOMPILE_BCS_TO_BAF
+		SPRINT textToReplace ~True()~
+		COUNT_REGEXP_INSTANCES ~%textToReplace%~ num_matches
+		PATCH_IF (num_matches > 0) BEGIN	
+REPLACE_TEXTUALLY ~%textToReplace%~ ~Global("D5_IWD_REAL","GLOBAL",1)~
+			PATCH_PRINT ~Patching: %num_matches% matches found in %SOURCE_FILESPEC% for REPLACE_TEXTUALLY: %textToReplace%~
+			PATCH_PRINT ~... // Global("D5_IWD_REAL","GLOBAL",1) added
+			~
+		END ELSE BEGIN
+			PATCH_WARN ~WARNING: could not find %textToReplace% in %SOURCE_FILESPEC%~
+		END
+
+COMPILE ~ildrgdie.bcs~ ~weidu_external/%MOD_FOLDER%/data/copy/ildrgdie.baf~
+COMPILE ~ilgemded.bcs~ ~weidu_external/%MOD_FOLDER%/data/copy/ilgemded.baf~
+COMPILE ~ilgemeff.bcs~ ~weidu_external/%MOD_FOLDER%/data/copy/ilgemeff.baf~
+COMPILE ~idlu2109.bcs~ ~weidu_external/%MOD_FOLDER%/data/copy/idlu2109.baf~
+
+EXTEND_BOTTOM ~ildrgdie.bcs~ ~%MOD_FOLDER%/data/copy/ildrgdie.baf~
+EXTEND_BOTTOM ~ilgemded.bcs~ ~%MOD_FOLDER%/data/copy/ilgemded.baf~ EVALUATE_BUFFER
+EXTEND_BOTTOM ~ilgemeff.bcs~ ~%MOD_FOLDER%/data/copy/ilgemeff.baf~ EVALUATE_BUFFER
+EXTEND_BOTTOM ~idlu2109.bcs~ ~%MOD_FOLDER%/data/copy/idlu2109.baf~
+
 
 // if any of those ^ are cut scenes, need to make sure they are called with StartCutSceneEx("",TRUE)
 
@@ -469,7 +551,8 @@ ACTION_IF (MOD_IS_INSTALLED ~SETUP-IWD1_EET.TP2~ ~1~) BEGIN
     BUT_ONLY
   END
 
-  WITH_TRA ~iwd1_eet/lang/%LANGUAGE%/dialog.tra~ BEGIN
+  WITH_TRA "IWD1_EET/lang/%LANGUAGE%/dialog.TRA"
+					"IWD1_EET/lang/%IWD_EET_integration_language%/dialog.TRA" BEGIN
     COMPILE ~%MOD_FOLDER%/data/compile/dambere.d~
     COMPILE ~%MOD_FOLDER%/data/compile/dhailee.d~
     COMPILE ~%MOD_FOLDER%/data/compile/demmrch.d~

@@ -1,0 +1,29 @@
+IF
+	Global("D5_IWD_REAL","GLOBAL",0)
+THEN
+	RESPONSE #100
+		CutSceneId("ICASARACHT")  // Icasaracht
+		MultiPlayerSync()
+		ClearAllActions()
+		MultiPlayerSync()
+		SetGlobal("GEM_ACTIVE","GLOBAL",1)
+		Activate("IWD_GEM")
+		ActionOverride("IWD_GEM",SetGlobal("IwIHidden","LOCALS",0))
+		CreateCreatureObject("CUTSPY","IWD_GEM",0,0,0)  // No such index
+		MultiPlayerSync()
+		MoveViewObject(Myself,INSTANT)
+		StartCutScene("ILDRGPAN")
+		EquipItemEx("MIN1HP",1)  // No such index
+		DestroyItem("MIN1HP")  // No such index
+		MultiPlayerSync()
+		MoveToPoint([1342.951])
+		FaceObject("IWD_GEM")
+		StartCutScene("ILGEMVEW")
+		AddXP2DA("ID1EX1V")
+		ReallyForceSpellRES("IDIN158","IWD_GEM")  // No such index
+		ActionOverride("CUTSPY",DestroySelf())
+		SmallWait(10)
+		ActionOverride("IWD_GEM",ApplySpellRES("IDINVIS5",Myself))  // No such index
+		EndCutSceneMode()
+END
+

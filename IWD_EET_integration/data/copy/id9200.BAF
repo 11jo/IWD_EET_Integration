@@ -1,0 +1,33 @@
+IF
+	Global("ID9200_Visited","GLOBAL",1)
+	Global("D5_IWD_REAL","GLOBAL",0)
+	Global("BARBARIAN_CAMP_HOSTILE","GLOBAL",0)
+	Global("BC_BATTLE_OVER","GLOBAL",0)
+	Global("GOBLIN_RACE_KILLED","MYAREA",0)
+	GlobalGT("SPRITE_IS_DEADBarb_Goblin00","GLOBAL",14)
+THEN
+	RESPONSE #100
+		SetGlobal("GOBLIN_RACE_KILLED","MYAREA",1)
+		SetGlobal("BC_BATTLE_OVER","GLOBAL",1)
+		AddXP2DA("ID1EX1V")
+		DisplayStringNoNameHead(Player1,%id9200_goblin_strref%)
+		SetGlobal("BC_GOBLIN_LOST","GLOBAL",1)
+		Continue()
+END
+
+IF
+	Global("ID9200_Visited","GLOBAL",1)
+	Global("D5_IWD_REAL","GLOBAL",0)
+	Global("BARBARIAN_CAMP_HOSTILE","GLOBAL",0)
+	Global("BC_BATTLE_OVER","GLOBAL",0)
+	Global("SKELETON_RACE_KILLED","MYAREA",0)
+	GlobalGT("SPRITE_IS_DEADBarb_Skeleton00","GLOBAL",14)
+THEN
+	RESPONSE #100
+		SetGlobal("SKELETON_RACE_KILLED","MYAREA",1)
+		SetGlobal("BC_BATTLE_OVER","GLOBAL",1)
+		AddXP2DA("ID1EX1V")
+		DisplayStringNoNameHead(Player1,%id9200_skeleton_strref%)
+		SetGlobal("BC_SKELETON_LOST","GLOBAL",1)
+		Continue()
+END

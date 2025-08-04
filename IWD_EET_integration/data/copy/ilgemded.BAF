@@ -1,0 +1,39 @@
+IF
+	Global("D5_IWD_REAL","GLOBAL",0)
+THEN
+	RESPONSE #100
+		CutSceneId(Player1)
+		ClearAllActions()
+		MultiPlayerSync()
+		MultiPlayerSync()
+		CreateCreature("CUTSPY",[1000.870],S)  // No such index
+		SetGlobal("IWDEET_HOW_COMPLETE","GLOBAL",1)
+		MoveViewPoint([943.839],INSTANT)
+		MultiPlayerSync()
+		Wait(2)
+		PlaySound("GEMDEATH")
+		StaticSequence("9603MS1",SEQ_AWAKE)
+		Wait(3)
+		StaticSequence("9603MS1",SEQ_CAST)
+		Wait(1)
+		AddXP2DA("ID1EX1V")
+		DisplayStringPointLog([944.839],%ilgemded_strref%)  // No such index
+		Wait(2)
+		CreateCreature("CUTSPY2",[2180.1190],S)  // No such index
+		Wait(1)
+		MoveViewPoint([2205.1177],INSTANT)
+		PlaySound("ID9603F")
+		Unlock("AR9604_EXIT")
+		Wait(1)
+		MultiPlayerSync()
+		PlaySound("ID9603D")
+		OpenDoor("AR9604_EXIT")
+		Wait(1)
+		MoveViewObject(Player1,INSTANT)
+		ActionOverride("CUTSPY2",DestroySelf())
+		ActionOverride("CUTSPY",DestroySelf())
+		MultiPlayerSync()
+		MultiPlayerSync()
+		EndCutSceneMode()
+END
+
