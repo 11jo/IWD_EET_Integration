@@ -14,7 +14,7 @@ APPEND KPCAPT01
 END
 
 EXTEND_BOTTOM KPCAPT01 3 
- IF ~~ THEN GOTO d5_new_state
+ IF ~Global("D5_IWD_REAL","GLOBAL",0)~ THEN GOTO d5_new_state
 END
 >>>>>>>> 
 
@@ -134,7 +134,7 @@ IF
 THEN
 	RESPONSE #100
 	SetGlobal("D5_EET_IWD","GLOBAL",1)
-	TriggerActivation("d5ix4000",TRUE)
+	TriggerActivation("d5ix4001",TRUE)
 END
 
 IF
@@ -143,7 +143,7 @@ IF
 THEN
 	RESPONSE #100
 	SetGlobal("D5TRAVEL","AR1301",1)
-	TriggerActivation("d5ix4000",FALSE)
+	TriggerActivation("d5ix4001",FALSE)
 END
 >>>>>>>> 
   COPY ~d5/ar1301_.baf~ ~weidu_external/%MOD_FOLDER%/compile/160/ar1301_.baf~
@@ -360,23 +360,49 @@ COPY ~d5/dcapvil+.d~ ~weidu_external/%MOD_FOLDER%/compile/160/dcapvil+.d~
 COMPILE ~weidu_external/%MOD_FOLDER%/compile/160/dcapvil+.d~
 
 ////////////////////
-
 <<<<<<<< d5/dlizk+.d
-ALTER_TRANS DLIZARDK BEGIN 0 END BEGIN 2 END BEGIN "TRIGGER" ~Global("D5_IWD_REAL","GLOBAL",1)~ END 
+ADD_TRANS_TRIGGER DLIZARDK 0 ~Global("D5_IWD_REAL","GLOBAL",1)~ DO 2
 >>>>>>>>
 COPY ~d5/dlizk+.d~ ~weidu_external/%MOD_FOLDER%/compile/160/dlizk+.d~
 COMPILE ~weidu_external/%MOD_FOLDER%/compile/160/dlizk+.d~
 
 // change Yxunomei's dialogue
 
-WITH_TRA ~iwd1_eet/lang/%LANGUAGE%/dialog.tra~ BEGIN
-  COMPILE ~%MOD_FOLDER%/data/compile/dalbion.d~
+  COPY - ~weidu.conf~ ~.../weidu.conf~
+    READ_2DA_ENTRY 0 2 3 "IWD_EET_integration_language"
+
+	PRINT ~Game in %IWD_EET_integration_language%...
+~
+
+//////////// To Double CHECK Should probably be D5_EET_IWD for variable in dalbion.d
+WITH_TRA  "IWD1_EET/lang/en_US/dialog.TRA"
+					"IWD1_EET/lang/%LANGUAGE%/dialog.TRA"
+						"IWD1_EET/lang/%IWD_EET_integration_language%/dialog.TRA" BEGIN
+  COMPILE ~%MOD_FOLDER%/data/compile/dalbion_Dialog.d~
 END
 
+// Delete True() without replacing potential new global from other mods
+COPY_EXISTING ~DYXUN.dlg~ ~weidu_external/%MOD_FOLDER%/data/copy/DYXUN.d~
+		DECOMPILE_DLG_TO_D
+		SPRINT textToReplace ~True()~
+		COUNT_REGEXP_INSTANCES ~%textToReplace%~ num_matches
+		PATCH_IF (num_matches > 0) BEGIN	
+REPLACE_TEXTUALLY ~%textToReplace%~ ~~
+			PATCH_PRINT ~Patching: %num_matches% matches found in %SOURCE_FILESPEC% for REPLACE_TEXTUALLY: %textToReplace%~
+			PATCH_PRINT ~... // True() is deleted from DYXUN.dlg
+			~
+			END ELSE BEGIN
+			PATCH_WARN ~WARNING: could not find %textToReplace% in %SOURCE_FILESPEC%~
+	END
+BUT_ONLY
+COMPILE ~weidu_external/%MOD_FOLDER%/data/copy/DYXUN.d~
+
 <<<<<<<< d5/dyxun+.d
-//ADD_STATE_TRIGGER DYXUN 0 ~Global("D5_IWD_REAL","GLOBAL",1)~
+ADD_STATE_TRIGGER DYXUN 0 ~Global("D5_IWD_REAL","GLOBAL",1)~
+
 // let's be a bit more aggressive
-REPLACE_STATE_TRIGGER DYXUN 0 ~Global("D5_IWD_REAL","GLOBAL",1)~
+// REPLACE_STATE_TRIGGER DYXUN 0 ~Global("D5_IWD_REAL","GLOBAL",1)~
+// See upper do avoid REPLACE_STATE_TRIGGER
 
 APPEND DYXUN
 IF ~Global("D5_EET_IWD","GLOBAL",1)~ THEN BEGIN d5yxun_0 
@@ -489,6 +515,8 @@ COMPILE ~weidu_external/%MOD_FOLDER%/compile/160/dyxun+.d~
 
 // set up travel triggers to severed hand
 
+
+///////// To Double check no script area for d5 global Probably to add
 COPY_EXISTING ~AR1700.are~ ~override~
  /* add travel region that links to other area */
   LAUNCH_PATCH_FUNCTION  ~fj_are_structure~
@@ -616,7 +644,7 @@ ACTION_IF (MOD_IS_INSTALLED ~IWD_EET_integration.TP2~ ~110~) BEGIN	//	if this mo
 <<<<<<<< d5/ddenain+.d
 ADD_TRANS_TRIGGER DDENAINI 18 ~Global("D5_EET_IWD","GLOBAL",0)~ DO 0
 
-EXTEND_TOP DDENAINI 18
+EXTEND_BOTTOM DDENAINI 18
   IF ~Global("D5_EET_IWD","GLOBAL",1)~ 
   THEN REPLY @8326 DO ~AddXP2DA("ID1EX3A")
                        DisplayStringNoNameDlg(LastTalkedToBy,@8139)
@@ -627,7 +655,7 @@ EXTEND_TOP DDENAINI 18
 
 ADD_TRANS_TRIGGER DDENAINI 19 ~Global("D5_EET_IWD","GLOBAL",0)~ DO 0
 
-EXTEND_TOP DDENAINI 19
+EXTEND_BOTTOM DDENAINI 19
   IF ~Global("D5_EET_IWD","GLOBAL",1)~ 
   THEN REPLY @8329 DO ~AddXP2DA("ID1EX3A")
                        DisplayStringNoNameDlg(LastTalkedToBy,@14413)
@@ -635,57 +663,46 @@ EXTEND_TOP DDENAINI 19
   END
 >>>>>>>> 
   COPY ~d5/ddenain+.d~ ~weidu_external/%MOD_FOLDER%/compile/160/ddenain+.d~
-  WITH_TRA ~iwd1_eet/lang/%LANGUAGE%/dialog.tra~ BEGIN
+  
+  WITH_TRA   "IWD1_EET/lang/en_US/dialog.TRA"
+					"IWD1_EET/lang/%LANGUAGE%/dialog.TRA"
+						"IWD1_EET/lang/%IWD_EET_integration_language%/dialog.TRA" BEGIN
     COMPILE ~weidu_external/%MOD_FOLDER%/compile/160/ddenain+.d~
   END
-
-/* not sure if this will work
-<<<<<<<< d5/dkayles_.d
-ADD_TRANS_TRIGGER DKAYLESS 15 ~Global("D5_IWD_REAL","GLOBAL",1)~ DO 0
-
-EXTEND_TOP DKAYLESS 15
-  IF ~Global("D5_EET_IWD","GLOBAL",1)
-      GlobalGT("SPRITE_IS_DEADSH_Warrior_Dead","GLOBAL",24)
-      Global("K_Done","GLOBAL",0)~ THEN REPLY @8399 DO ~AddXP2DA("ID1EX3H")
-                                                        DisplayStringNoNameDlg(LastTalkedToBy,@8142)
-                                                        SetGlobal("K_Done","GLOBAL",1)
-                                                        EraseJournalEntry(@14416)
-                                                        AddJournalEntry(@14415,QUEST_DONE)~ GOTO 18
-  END
-
-ADD_TRANS_TRIGGER DKAYLESS 17 ~Global("D5_IWD_REAL","GLOBAL",1)~ DO 0
-
-EXTEND_TOP DKAYLESS 17
-  IF ~Global("D5_EET_IWD","GLOBAL",1)
-      GlobalGT("SPRITE_IS_DEADSH_Warrior_Dead","GLOBAL",24)
-      Global("KaylessaQuest","GLOBAL",1)
-      Global("K_Done","GLOBAL",0)~ THEN REPLY @8396 DO ~AddXP2DA("ID1EX3H")
-                                                        DisplayStringNoNameDlg(LastTalkedToBy,@8142)
-                                                        SetGlobal("K_Done","GLOBAL",1)
-                                                        EraseJournalEntry(@14416)
-                                                        AddJournalEntry(@14417,QUEST_DONE)~ GOTO 18
-  END
->>>>>>>> 
-  COPY ~d5/dkayles+.d~ ~weidu_external/%MOD_FOLDER%/compile/160/dkayles+.d~
-  COMPILE ~weidu_external/%MOD_FOLDER%/compile/160/dkayles+.d~
-*/
-  WITH_TRA ~iwd1_eet/lang/%LANGUAGE%/dialog.tra~ BEGIN
-    COMPILE ~%MOD_FOLDER%/data/compile/dkayless.d~
+  
+  WITH_TRA  "IWD1_EET/lang/en_US/dialog.TRA"
+					"IWD1_EET/lang/%LANGUAGE%/dialog.TRA"
+						"IWD1_EET/lang/%IWD_EET_integration_language%/dialog.TRA" BEGIN
+    COMPILE ~%MOD_FOLDER%/data/compile/dkayless_Dialog.d~
   END
 
 // don't do quest XP in dragon's eye unless playing from IWD
 
-  COPY_EXISTING ~id4005.bcs~ ~override~
-    DECOMPILE_AND_PATCH BEGIN
-      REPLACE_TEXTUALLY
-~Global("YXUNOMEI_SLAIN","GLOBAL",0)~ 
-~Global("YXUNOMEI_SLAIN","GLOBAL",0)
+// To Double check
+COPY_EXISTING ~id4005.bcs~ ~weidu_external/%MOD_FOLDER%/data/copy/id4005.baf~
+		DECOMPILE_BCS_TO_BAF
+		SPRINT textToReplace ~Global("YXUNOMEI_SLAIN","GLOBAL",0)~
+		COUNT_REGEXP_INSTANCES ~%textToReplace%~ num_matches
+		PATCH_IF (num_matches > 0) BEGIN	
+REPLACE_TEXTUALLY ~%textToReplace%~ ~Global("YXUNOMEI_SLAIN","GLOBAL",0)
     Global("D5_IWD_REAL","GLOBAL",1)~
-      REPLACE_TEXTUALLY
-~Global("Kuldahar_Attack","GLOBAL",0)~
-~Global("Kuldahar_Attack","GLOBAL",0)
+			PATCH_PRINT ~Patching: %num_matches% matches found in %SOURCE_FILESPEC% for REPLACE_TEXTUALLY: %textToReplace%~
+			PATCH_PRINT ~... // Global("D5_IWD_REAL","GLOBAL",1) added
+			~
+		END
+		SPRINT textToReplace ~Global("Kuldahar_Attack","GLOBAL",0)~
+		COUNT_REGEXP_INSTANCES ~%textToReplace%~ num_matches
+		PATCH_IF (num_matches > 0) BEGIN	
+REPLACE_TEXTUALLY ~%textToReplace%~ ~Global("Kuldahar_Attack","GLOBAL",0)
     Global("D5_IWD_REAL","GLOBAL",1)~
-    END
+			PATCH_PRINT ~Patching: %num_matches% matches found in %SOURCE_FILESPEC% for REPLACE_TEXTUALLY: %textToReplace%~
+			PATCH_PRINT ~... // Global("D5_IWD_REAL","GLOBAL",1) added
+			~
+		END ELSE BEGIN
+			PATCH_WARN ~WARNING: could not find %textToReplace% in %SOURCE_FILESPEC%~
+		END
+
+COMPILE ~weidu_external/%MOD_FOLDER%/data/copy/id4005.baf~
 
 /* no, already removed access to presio's level
 // adjust presio XP reward in id4003.bcs as well
