@@ -362,7 +362,7 @@ END
 END
 >>>>>>>>
 COPY ~d5/d5hjoend.d~ ~weidu_external/%MOD_FOLDER%/compile/d5hjoend.d~
-COMPILE ~weidu_external/%MOD_FOLDER%/compile/d5hjoend.d~
+COMPILE ~weidu_external/%MOD_FOLDER%/compile/d5hjoend.d~ USING ~%MOD_FOLDER%/lang/%s/how_integration.tra~
 
 END
 
