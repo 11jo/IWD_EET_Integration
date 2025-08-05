@@ -424,8 +424,29 @@ ACTION_IF (MOD_IS_INSTALLED ~SETUP-IWD1_EET.TP2~ ~1~) BEGIN
 	END
 
   //COPY ~%MOD_FOLDER%/data/copy/id9200.bcs~ ~override~
-EXTEND_TOP ~id9200.bcs~ ~%MOD_FOLDER%/data/copy/id9200.baf~ EVALUATE_BUFFER
-
+COPY_EXISTING ~id9200.bcs~ ~weidu_external/%MOD_FOLDER%/data/copy/id9200.baf~
+		DECOMPILE_BCS_TO_BAF
+		SPRINT textToReplace ~GlobalGT("SPRITE_IS_DEADBarb_Skeleton00","GLOBAL",14)~
+		COUNT_REGEXP_INSTANCES ~%textToReplace%~ num_matches
+		PATCH_IF (num_matches > 0) BEGIN	
+REPLACE_TEXTUALLY ~%textToReplace%~ ~GlobalGT("SPRITE_IS_DEADBarb_Skeleton00","GLOBAL",14)
+    Global("D5_IWD_REAL","GLOBAL",1)~
+			PATCH_PRINT ~Patching: %num_matches% matches found in %SOURCE_FILESPEC% for REPLACE_TEXTUALLY: %textToReplace%~
+			PATCH_PRINT ~... // Global("D5_IWD_REAL","GLOBAL",1) added
+			~
+		END
+		SPRINT textToReplace ~GlobalGT("SPRITE_IS_DEADBarb_Goblin00","GLOBAL",14)~
+		COUNT_REGEXP_INSTANCES ~%textToReplace%~ num_matches
+		PATCH_IF (num_matches > 0) BEGIN	
+REPLACE_TEXTUALLY ~%textToReplace%~ ~GlobalGT("SPRITE_IS_DEADBarb_Goblin00","GLOBAL",14)
+    Global("D5_IWD_REAL","GLOBAL",1)~
+			PATCH_PRINT ~Patching: %num_matches% matches found in %SOURCE_FILESPEC% for REPLACE_TEXTUALLY: %textToReplace%~
+			PATCH_PRINT ~... // Global("D5_IWD_REAL","GLOBAL",1) added
+			~
+		END ELSE BEGIN
+			PATCH_WARN ~WARNING: could not find %textToReplace% in %SOURCE_FILESPEC%~
+		END
+		
   //COPY ~%MOD_FOLDER%/data/copy/ildrgdie.bcs~ ~override~
 COPY_EXISTING ~ildrgdie.bcs~ ~weidu_external/%MOD_FOLDER%/data/copy/ildrgdie.baf~
 		DECOMPILE_BCS_TO_BAF
@@ -482,10 +503,13 @@ REPLACE_TEXTUALLY ~%textToReplace%~ ~Global("D5_IWD_REAL","GLOBAL",1)~
 			PATCH_WARN ~WARNING: could not find %textToReplace% in %SOURCE_FILESPEC%~
 		END
 
-COMPILE ~ildrgdie.bcs~ ~weidu_external/%MOD_FOLDER%/data/copy/ildrgdie.baf~
-COMPILE ~ilgemded.bcs~ ~weidu_external/%MOD_FOLDER%/data/copy/ilgemded.baf~
-COMPILE ~ilgemeff.bcs~ ~weidu_external/%MOD_FOLDER%/data/copy/ilgemeff.baf~
-COMPILE ~idlu2109.bcs~ ~weidu_external/%MOD_FOLDER%/data/copy/idlu2109.baf~
+COMPILE ~weidu_external/%MOD_FOLDER%/data/copy/id9200.baf~
+COMPILE ~weidu_external/%MOD_FOLDER%/data/copy/ildrgdie.baf~
+COMPILE ~weidu_external/%MOD_FOLDER%/data/copy/ilgemded.baf~
+COMPILE ~weidu_external/%MOD_FOLDER%/data/copy/ilgemeff.baf~
+COMPILE ~weidu_external/%MOD_FOLDER%/data/copy/idlu2109.baf~
+
+EXTEND_TOP ~id9200.bcs~ ~%MOD_FOLDER%/data/copy/id9200.baf~ EVALUATE_BUFFER
 
 EXTEND_BOTTOM ~ildrgdie.bcs~ ~%MOD_FOLDER%/data/copy/ildrgdie.baf~
 EXTEND_BOTTOM ~ilgemded.bcs~ ~%MOD_FOLDER%/data/copy/ilgemded.baf~ EVALUATE_BUFFER
@@ -559,7 +583,7 @@ EXTEND_BOTTOM ~idlu2109.bcs~ ~%MOD_FOLDER%/data/copy/idlu2109.baf~
 				"IWD1_EET/lang/%LANGUAGE%/dialog.TRA"
 					"IWD1_EET/lang/%IWD_EET_integration_language%/dialog.TRA" BEGIN
     COMPILE ~%MOD_FOLDER%/data/compile/HoW_Dialog.d~
-    /*COMPILE ~%MOD_FOLDER%/data/compile/dambere.d~
+  /*COMPILE ~%MOD_FOLDER%/data/compile/dambere.d~
     COMPILE ~%MOD_FOLDER%/data/compile/dhailee.d~
     COMPILE ~%MOD_FOLDER%/data/compile/demmrch.d~
     COMPILE ~%MOD_FOLDER%/data/compile/dkieran2.d~

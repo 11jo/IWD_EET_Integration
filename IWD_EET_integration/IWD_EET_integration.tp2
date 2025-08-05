@@ -175,9 +175,9 @@ INCLUDE ~%MOD_FOLDER%/lib/soa_easter_egg.tpa~
 
 
 BEGIN ~Play Heart of Winter before NWN (Will send you back to HoW if not completed after IWD1 final)~ // @999998014 /* Add NWN after IWD1 Campaign */
-REQUIRE_PREDICATE (MOD_IS_INSTALLED ~SETUP-IWD_EET_integration.TP2~ ~100~) @999998004 /* IWD1_EET required */
+REQUIRE_PREDICATE (MOD_IS_INSTALLED ~SETUP-IWD_EET_integration.TP2~ ~100~) @999998005 /* IWD1 Campaign required */
 REQUIRE_PREDICATE (MOD_IS_INSTALLED ~SETUP-IWD1_EET.TP2~ ~1~) @999998004 /* IWD1_EET required */
-REQUIRE_PREDICATE (MOD_IS_INSTALLED ~SETUP-NWNFORBG.TP2~ ~0~) @999998004 /* IWD1_EET required */
+REQUIRE_PREDICATE (MOD_IS_INSTALLED ~SETUP-NWNFORBG.TP2~ ~0~) ~NWNFORBG main componant required~
 REQUIRE_PREDICATE (MOD_IS_INSTALLED ~SETUP-NWNFORBG.TP2~ ~11~ OR MOD_IS_INSTALLED ~SETUP-NWNFORBG.TP2~ ~10~) ~Need componant "Place NWN locations on BP-BGT Worldmap" or  componant "Use separate worldmap for NWN areas" from NWNinBG need to be installed~
 DESIGNATED 181
 LABEL ~D5_IWD1_NWN_INTEGRATION_HoW~
@@ -202,9 +202,9 @@ END
 
 
 BEGIN ~Do whatever you want (Will send you to NWN even if HoW is not completed after IWD1 final)~ // @999998014 /* Add NWN after IWD1 Campaign */
-REQUIRE_PREDICATE (MOD_IS_INSTALLED ~SETUP-IWD_EET_integration.TP2~ ~100~) @999998004 /* IWD1_EET required */
+REQUIRE_PREDICATE (MOD_IS_INSTALLED ~SETUP-IWD_EET_integration.TP2~ ~100~) @999998005 /* IWD1 Campaign required */
 REQUIRE_PREDICATE (MOD_IS_INSTALLED ~SETUP-IWD1_EET.TP2~ ~1~) @999998004 /* IWD1_EET required */
-REQUIRE_PREDICATE (MOD_IS_INSTALLED ~SETUP-NWNFORBG.TP2~ ~0~) @999998004 /* IWD1_EET required */
+REQUIRE_PREDICATE (MOD_IS_INSTALLED ~SETUP-NWNFORBG.TP2~ ~0~) ~NWNFORBG main componant required~
 REQUIRE_PREDICATE (MOD_IS_INSTALLED ~SETUP-NWNFORBG.TP2~ ~11~ OR MOD_IS_INSTALLED ~SETUP-NWNFORBG.TP2~ ~10~) ~Need componant "Place NWN locations on BP-BGT Worldmap" or  componant "Use separate worldmap for NWN areas" from NWNinBG need to be installed~
 DESIGNATED 182
 LABEL ~D5_IWD1_NWN_INTEGRATION_HoW-Free~

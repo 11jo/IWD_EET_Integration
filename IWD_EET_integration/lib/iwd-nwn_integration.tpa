@@ -114,5 +114,5 @@ END
 >>>>>>>>
 COPY ~d5/d5id1105.baf~ ~weidu_external/%MOD_FOLDER%/compile/180/d5id1105.baf~
 EXTEND_TOP ~id1105.bcs~ ~weidu_external/%MOD_FOLDER%/compile/180/d5id1105.baf~
-EXTEND_TOP ~id9603.bcs~ ~weidu_external/%MOD_FOLDER%/compile/180/d5id1105.baf~
+EXTEND_TOP ~id9603.bcs~ ~weidu_external/%MOD_FOLDER%/compile/180/d5id1105.baf~ // Allow transition to NeverWinter after HoW if IWD1 separate campaign is already done
 
