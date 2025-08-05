@@ -374,7 +374,6 @@ COMPILE ~weidu_external/%MOD_FOLDER%/compile/160/dlizk+.d~
 	PRINT ~Game in %IWD_EET_integration_language%...
 ~
 
-//////////// To Double CHECK Should probably be D5_EET_IWD for variable in dalbion.d
 WITH_TRA  "IWD1_EET/lang/en_US/dialog.TRA"
 					"IWD1_EET/lang/%LANGUAGE%/dialog.TRA"
 						"IWD1_EET/lang/%IWD_EET_integration_language%/dialog.TRA" BEGIN
