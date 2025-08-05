@@ -58,6 +58,7 @@ ACTION_IF (MOD_IS_INSTALLED ~SETUP-IWD1_EET.TP2~ ~1~) BEGIN
 
 END
 
+////////// To Double check for understanding
 ACTION_IF !(VARIABLE_IS_SET %EE_LANGUAGE%) BEGIN
   COPY_EXISTING ~spwi101.spl~ ~override~
 	READ_STRREF 0x50 description_string
@@ -160,6 +161,8 @@ LAF cd_extend_bg_area_script STR_VAR area = ~ar0500~ script = EVAL ~weidu_extern
 
 // adjust HideGUI stuff
 
+
+////////// To Double check for understanding
 ACTION_FOR_EACH id_script IN ~ildragon~ ~id9604~ ~ildrgtlk~ ~id1006~ BEGIN
   ACTION_IF (FILE_EXISTS_IN_GAME ~%id_script%.bcs~) BEGIN
     COPY_EXISTING ~%id_script%.bcs~ ~override~
@@ -327,6 +330,7 @@ LAF cd_extend_bg_area_script STR_VAR area = ~ID9600~ script = EVAL ~weidu_extern
 
 ACTION_IF (MOD_IS_INSTALLED ~SETUP-IWD1_EET.TP2~ ~1~) BEGIN
 
+// ALTER_TRANS no need to be modified since mod .d files
 <<<<<<<< d5/d5hjoend.d
 ALTER_TRANS D5HJOLL // file name
   BEGIN 75 END // state number
@@ -404,15 +408,15 @@ IF_EXISTS BUT_ONLY
 
 ACTION_IF (MOD_IS_INSTALLED ~SETUP-IWD1_EET.TP2~ ~1~) BEGIN
 
-
   COPY - ~weidu.conf~ ~.../weidu.conf~
     READ_2DA_ENTRY 0 2 3 "IWD_EET_integration_language"
 
 	PRINT ~Game in %IWD_EET_integration_language%...
 ~
 
-		WITH_TRA "IWD1_EET/lang/%LANGUAGE%/dialog.TRA"
-					"IWD1_EET/lang/%IWD_EET_integration_language%/dialog.TRA" BEGIN
+		WITH_TRA  "IWD1_EET/lang/en_US/dialog.TRA"
+					"IWD1_EET/lang/%LANGUAGE%/dialog.TRA"
+						"IWD1_EET/lang/%IWD_EET_integration_language%/dialog.TRA" BEGIN
     OUTER_SET ilgemeff_strref = RESOLVE_STR_REF(@26824)
     OUTER_SET ilgemded_strref = RESOLVE_STR_REF(@26728)
     OUTER_SET id9200_goblin_strref = RESOLVE_STR_REF(@26812)
@@ -551,9 +555,11 @@ EXTEND_BOTTOM ~idlu2109.bcs~ ~%MOD_FOLDER%/data/copy/idlu2109.baf~
     BUT_ONLY
   END
 
-  WITH_TRA "IWD1_EET/lang/%LANGUAGE%/dialog.TRA"
+  WITH_TRA "IWD1_EET/lang/en_US/dialog.TRA"
+				"IWD1_EET/lang/%LANGUAGE%/dialog.TRA"
 					"IWD1_EET/lang/%IWD_EET_integration_language%/dialog.TRA" BEGIN
-    COMPILE ~%MOD_FOLDER%/data/compile/dambere.d~
+    COMPILE ~%MOD_FOLDER%/data/compile/HoW_Dialog.d~
+    /*COMPILE ~%MOD_FOLDER%/data/compile/dambere.d~
     COMPILE ~%MOD_FOLDER%/data/compile/dhailee.d~
     COMPILE ~%MOD_FOLDER%/data/compile/demmrch.d~
     COMPILE ~%MOD_FOLDER%/data/compile/dkieran2.d~
@@ -563,7 +569,7 @@ EXTEND_BOTTOM ~idlu2109.bcs~ ~%MOD_FOLDER%/data/copy/idlu2109.baf~
     COMPILE ~%MOD_FOLDER%/data/compile/dhjollde.d~
     COMPILE ~%MOD_FOLDER%/data/compile/dtiernon.d~
     COMPILE ~%MOD_FOLDER%/data/compile/dtybald.d~
-    COMPILE ~%MOD_FOLDER%/data/compile/dwylf.d~
+    COMPILE ~%MOD_FOLDER%/data/compile/dwylf.d~*/
   END
 
 END
