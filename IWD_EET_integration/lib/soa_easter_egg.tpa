@@ -721,6 +721,12 @@ END	//	end if iwd xp was restored
 
 // change larrel's dialogue to activate gem and teleport party to athkatla, no cut-scene
 
+		WITH_TRA  "IWD1_EET/lang/en_US/dialog.TRA"
+					"IWD1_EET/lang/%LANGUAGE%/dialog.TRA"
+						"IWD1_EET/lang/%IWD_EET_integration_language%/dialog.TRA" BEGIN
+    OUTER_SET d5bglarrel2_strref = RESOLVE_STR_REF(@6516)
+	END
+
 // ***** probably want to play some kind of visual effect when he activates it
 
 <<<<<<<< d5/dlarrel+.d
@@ -733,7 +739,7 @@ APPEND ~dlarrel~
 
   IF ~~ THEN BEGIN ~d5bglarrel2~
   SAY @800030
-  IF ~~ THEN REPLY @800031  DO ~SetGlobal("BGHeartstone_Active","GLOBAL",2) DisplayStringNoNameDlg(LastTalkedToBy,499613)~ EXIT
+  IF ~~ THEN REPLY @800031  DO ~SetGlobal("BGHeartstone_Active","GLOBAL",2) DisplayStringNoNameDlg(LastTalkedToBy,%d5bglarrel2_strref%)~ EXIT
   END
 END
 
