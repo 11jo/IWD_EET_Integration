@@ -25,9 +25,11 @@ END
 
 // Bypass HoW after IWD1 END.
 
-ACTION_IF (FILE_EXISTS_IN_GAME ~ID1105.bcs~) BEGIN
+	ACTION_FOR_EACH bcs IN ID1105 ID0000 BEGIN
 
-		COPY_EXISTING ~ID1105.bcs~ ~override~
+ACTION_IF (FILE_EXISTS_IN_GAME ~%bcs%.bcs~) BEGIN
+
+		COPY_EXISTING ~%bcs%.bcs~ ~override~
 		DECOMPILE_AND_PATCH BEGIN
 			SPRINT textToReplace ~^[%TAB% ]*!Global("IWDEET_HOW_COMPLETE","GLOBAL",1)~
 			COUNT_REGEXP_INSTANCES ~%textToReplace%~ num_matches
@@ -60,9 +62,10 @@ THEN
 END
 
 >>>>>>>>
-EXTEND_TOP ~ID1105.bcs~ ~.../HOW_IN_BG2_ID1105.baf~ EVALUATE_BUFFER
+EXTEND_TOP ~%bcs%.bcs~ ~.../HOW_IN_BG2_ID1105.baf~ EVALUATE_BUFFER
 
 END
+	END
 
 ////////////////////
 

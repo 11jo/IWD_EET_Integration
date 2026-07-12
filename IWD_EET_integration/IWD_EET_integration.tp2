@@ -195,6 +195,7 @@ END ELSE ACTION_IF MOD_IS_INSTALLED ~SETUP-NWNFORBG.TP2~ 10 BEGIN
 
 COPY ~%MOD_FOLDER%/lib/iwd-nwn_integration.tpa~ ~weidu_external/backup/%MOD_FOLDER%/iwd-nwn_integration.tpa~
 REPLACE_TEXTUALLY ~//SetWorldmap("nwnworld")~ ~SetWorldmap("worldmap")~
+REPLACE_TEXTUALLY ~//Global("IWDEET_HOW_COMPLETE","GLOBAL",1)~ ~Global("IWDEET_HOW_COMPLETE","GLOBAL",1)~
 
 INCLUDE ~weidu_external/backup/%MOD_FOLDER%/iwd-nwn_integration.tpa~
 
