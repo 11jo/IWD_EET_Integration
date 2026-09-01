@@ -1,0 +1,19 @@
+IF
+	Global("D5_IWD_REAL","GLOBAL",0)
+THEN
+	RESPONSE #100
+		CutSceneId(Player1)
+		StartCutSceneMode()
+		SmallWait(5)
+		ActionOverride(Player2,LeaveAreaLUA("AR0500","",[115.2700],N))  // Bridge District
+		ActionOverride(Player3,LeaveAreaLUA("AR0500","",[150.2760],NE))  // Bridge District
+		ActionOverride(Player4,LeaveAreaLUA("AR0500","",[210.2790],NW))  // Bridge District
+		ActionOverride(Player5,LeaveAreaLUA("AR0500","",[270.2790],NNE))  // Bridge District
+		ActionOverride(Player6,LeaveAreaLUA("AR0500","",[320.2740],NNW))  // Bridge District
+		LeaveAreaLUAPanic("AR0500","",[330.2680],N)  // Bridge District
+		LeaveAreaLUA("AR0500","",[330.2680],N)  // Bridge District
+		SmallWait(5)
+		MultiPlayerSync()
+		EndCutSceneMode()
+END
+

@@ -1,0 +1,37 @@
+// BEGIN ~DALBION~
+
+// DALBION To move to easter egg tpa
+
+ADD_TRANS_TRIGGER DALBION 0 ~Global("D5_EET_IWD","GLOBAL",0)~ DO 1 3 ////////// Should probably be D5_EET_IWD for Each
+
+ADD_TRANS_TRIGGER DALBION 1 ~Global("D5_EET_IWD","GLOBAL",0)~ DO 1 2
+
+ADD_TRANS_TRIGGER DALBION 2 ~Global("D5_EET_IWD","GLOBAL",0)~ DO 0
+
+ADD_TRANS_TRIGGER DALBION 3 ~Global("D5_EET_IWD","GLOBAL",0)~ DO 1
+
+ADD_TRANS_TRIGGER DALBION 10 ~Global("D5_EET_IWD","GLOBAL",0)~ DO 2
+
+ADD_TRANS_TRIGGER DALBION 11 ~Global("D5_EET_IWD","GLOBAL",0)~ DO 0
+
+ADD_TRANS_TRIGGER DALBION 12 ~Global("D5_EET_IWD","GLOBAL",0)~ DO 0
+
+ADD_TRANS_TRIGGER DALBION 13 ~Global("D5_EET_IWD","GLOBAL",0)~ DO 0
+
+ADD_TRANS_TRIGGER DALBION 15 ~Global("D5_EET_IWD","GLOBAL",0)~ DO 0
+
+ADD_TRANS_TRIGGER DALBION 23 ~Global("D5_EET_IWD","GLOBAL",0)~ DO 0 1 2
+
+EXTEND_BOTTOM DALBION 23
+	IF ~Global("D5_EET_IWD","GLOBAL",1)~
+		THEN REPLY @1319 DO ~AddXP2DA("ID1EX3A")
+								DisplayStringNoNameDlg(LastTalkedToBy,@6250)
+								SetGlobal("Yuanti_Inferno","GLOBAL",1)
+								Enemy()~ EXIT
+	IF ~Global("D5_EET_IWD","GLOBAL",1)~ 
+		THEN REPLY @1321 DO ~AddXP2DA("ID1EX3A")
+								DisplayStringNoNameDlg(LastTalkedToBy,@6250)
+								SetGlobal("Yuanti_Inferno","GLOBAL",1)
+								Enemy()~ EXIT
+END
+

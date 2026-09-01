@@ -3,7 +3,7 @@
     EET_CMP_TITLE_BG1 =~
 @999999002 = ~EET_CMP_TITLE_ID1 = "Icewind Dale",
     EET_WARNING_TITLE =~
-@999999003 = ~Welcome to Icewind Dale - tipun~
+@999999003 = ~Bienvenue à l'Épine Dorsal du monde - Tipun~
 @999999004 = ~Icewind Dale~
 
 //IWD2
@@ -11,5 +11,5 @@
     EET_CMP_TITLE_BG1 =~
 @999999012 = ~EET_CMP_TITLE_ID2 = "Icewind Dale II",
     EET_WARNING_TITLE =~
-@999999013 = ~Welcome to Icewind Dale II - tipun~
+@999999013 = ~Bon retour à l'Épine Dorsal du monde - Tipun~
 @999999014 = ~Icewind Dale II~

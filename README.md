@@ -10,23 +10,23 @@ Version 0.12
 
 This mod is designed to work with tipun's IWD_EET mods. There are three such mods at the moment:
 
--- IWD1_EET
--- IWD2_EET
--- Icewind_EET (which helps integrate some of the content of IWD1 and IWD2)
+- IWD1_EET
+- IWD2_EET
+- IWD_EET_End (which helps integrate some of the content of IWD1 and IWD2)
 
 As of now, most of the components of this mod *require* all of IWD1_EET, IWD2_EET, *and* Icewind_EET to be installed first. Because most components of this mod deal with the content added by his IWD1 and IWD2 mods. Notably, tipun's IWD1 and IWD2 mods can only be installed on a game that already has EET installed. So the requirements for this mod to work are rather involved!
 
--- EET
--- IWD1_EET
--- IWD2_EET
--- Icewind_EET
--- [this mod]
+- EET
+- IWD1_EET
+- IWD2_EET
+- IWD_EET_End
+- [this mod](https://github.com/subtledoctor/IWD_EET_Integration)
 
 Two components of this mod specifically relate to IWD's Heart of Winter content; these two components can work with tipun's HoW_in_EET mod in place of the IWD1 and IWD2 mods.
  
 ## Features
 
-COMPONENT 100: Add IWD Campaigns to the EET Menu
+- COMPONENT 100: Add IWD Campaigns to the EET Menu
 
 This component adds IWD1 and IWD2 to the EET 'Campaigns' menu, so that you can play each of those campaigns as a distinct game.
 
@@ -34,31 +34,31 @@ NOTE: combined with components 130 and 135 (see below), this makes the IWD2 game
 
 NOTE ALSO: tipun's mods tune the IWD1 content to be played in between BG1 and SoD, and tune the IWD2 content to be played in the late part of SoA. So if you play these campaigns with level 1 parties, various aspects of the experience will be out of whack. The following components are designed to address this.
 
-COMPONENT 110: Adjust IWD1 XP for Full Campaign
+- COMPONENT 110: Adjust IWD1 XP for Full Campaign
 
 This component alters the XP rewards you get along the way in the IWD campaign to more or less match those in the base IWDEE game. This is to provide a batter experience if you play the campaign from level 1, from the EET main menu. 
 
 NOTE: these XP rewards are *not* tuned for playing IWD content in the midst of an EET game. If you play the content in late BG1 as tipun designed, it will vastly inflate your party's XP total, throwing off balance of for the rest of the game. This is really designed to support component 100; playing the game as its own campaign or inside an EET game is basically an either/or proposition.
 
-COMPONENT 115: Adjust IWD1 Creature Stats for Full Campaign
+- COMPONENT 115: Adjust IWD1 Creature Stats for Full Campaign
 
 With tipun's IWD1_EET mod, the IWD1 enemies are tuned for ~8th level parties. Those in the early part of IWD will be seriously boosted combat stats, and the gameplay experience will be unbalanced. This component reduces enemy stats in the early part of IWD1 to be more appropriate for a party starting a new campaign at level 1. They are a bit stronger than in IWDEE, but still manageable for low-level IWD parties.
 
 NOTE: as with component 110, this is designed to support component 100 and playing the IWD1 campaign fresh from level 1. If you install this and then play IWD in an EET game, at the end of BG1, you will find these enemies to be quite easy.
 
-COMPONENT 130: Adjust IWD2 XP for Full Campaign
+- COMPONENT 130: Adjust IWD2 XP for Full Campaign
 
 Like component 110, this component modifies the XP awards granted throughout the IWD2 game to be appropriate for a party playing that campaign as a game unto itself. This was a bit difficult to configure; tipun's version has XP awards designed for a late-BG2 party, and the original IWD2 game uses 3rd Edition D&D which has quite different XP tables. I *think* I set these values such that you can reach about 20th level in the course of playing the IWD2 campaign; but I have not yet played it through and it still needs testing and fine-tuning.
 
 NOTE: here again, this is designed for playing the IWD2 campaign from level 1. If you play it inside an EET game this will greatly inflate your party's XP total. 
 
-COMPONENT 135: Adjust IWD2 Creature Stats for Full Campaign
+- COMPONENT 135: Adjust IWD2 Creature Stats for Full Campaign
 
 Like component 115, this component tunes the IWD2 creature stats to be appropriate for a party starting in Targos at level 1. Tipun's version is tuned for parties nearing TOB; this component basically sets creature stats to match those in the base IWD2 game.
 
 NOTE: one more time, this will significantly change the experience if you play the content within an EET game - the IWD2 enemies will be extremely underpowered relative to a late-SoA party.
 
-COMPONENT 150: Add HoW access to BG2
+- COMPONENT 150: Add HoW access to BG2
 
 Tipun's HoW_in_EET mod put Hjollder in Ulgoth's Beard and has you play the HoW quest in late BG1; his IWD1_EET mod leaves Hjollder in Kuldahar and lets you play the HoW quest normally inside the IWD1 campaign.
 
@@ -72,11 +72,11 @@ If you have IWD1_EET installed, Hjollder will still be in Kuldahar. If you play 
 
 NOTE: this component has so far only been fully tested with tipun's HoW_in_EET mod. It may need some fine-tuning to work fully with the IWD1_EET mod.
 
-COMPONENT 155: Remove Overpowered Items from HoW
+- COMPONENT 155: Remove Overpowered Items from HoW
 
 This small component simply removes three items from HoW: Blood Iron, Young Rage, and Svian's Club. These weapons are incredibly powerful - +4 and +5 - and are available for free in a relatively easy area. These are TOB-level weapons that you can get at the beginning of BG2, or even before SoD. This component simply deletes them from the area.
 
-COMPONENT 160: Add IWD1 Easter Egg Content to BG2
+- COMPONENT 160: Add IWD1 Easter Egg Content to BG2
 
 This component is a bit of a lark. It adds access to various IWD areas - currently, Dragon's Eye and Severed Hand - to the SoA campaign as part of a small-ish quest. Sort of. The content is completely optional, and is actually a bit difficult to find. But if you want more quests and encounters in your EET game, maybe you will enjoy this. 
 

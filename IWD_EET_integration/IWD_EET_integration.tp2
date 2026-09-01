@@ -16,6 +16,7 @@ LANGUAGE ~Russian~
 	     ~IWD_EET_integration/lang/en_US/setup.tra~
 	     ~IWD_EET_integration/lang/en_US/soa_easter_egg.tra~
 	     ~IWD_EET_integration/lang/en_US/Gui.tra~
+	     ~IWD_EET_integration/lang/en_US/how_integration.tra~
 	     ~IWD_EET_integration/lang/ru_RU/setup.tra~
 	     ~IWD_EET_integration/lang/ru_RU/soa_easter_egg.tra~
 	     ~IWD_EET_integration/lang/ru_RU/Gui.tra~
@@ -31,6 +32,7 @@ LANGUAGE ~Deutsch~
 	     ~IWD_EET_integration/lang/en_US/setup.tra~
 	     ~IWD_EET_integration/lang/en_US/soa_easter_egg.tra~
 	     ~IWD_EET_integration/lang/en_US/Gui.tra~
+	     ~IWD_EET_integration/lang/en_US/how_integration.tra~
 	     ~IWD_EET_integration/lang/de_DE/setup.tra~
 	     ~IWD_EET_integration/lang/de_DE/soa_easter_egg.tra~
 	     ~IWD_EET_integration/lang/de_DE/Gui.tra~
@@ -40,6 +42,7 @@ LANGUAGE ~Français~
 	     ~IWD_EET_integration/lang/en_US/setup.tra~
 	     ~IWD_EET_integration/lang/en_US/soa_easter_egg.tra~
 	     ~IWD_EET_integration/lang/en_US/Gui.tra~
+	     ~IWD_EET_integration/lang/en_US/how_integration.tra~
 	     ~IWD_EET_integration/lang/fr_FR/setup.tra~
 	     ~IWD_EET_integration/lang/fr_FR/soa_easter_egg.tra~
 	     ~IWD_EET_integration/lang/fr_FR/Gui.tra~
@@ -49,6 +52,7 @@ LANGUAGE ~Español~
 	     ~IWD_EET_integration/lang/en_US/setup.tra~
 	     ~IWD_EET_integration/lang/en_US/soa_easter_egg.tra~
 	     ~IWD_EET_integration/lang/en_US/Gui.tra~
+	     ~IWD_EET_integration/lang/en_US/how_integration.tra~
 	     ~IWD_EET_integration/lang/es_ES/setup.tra~
 	     ~IWD_EET_integration/lang/es_ES/soa_easter_egg.tra~
 	     ~IWD_EET_integration/lang/es_ES/Gui.tra~
@@ -58,6 +62,7 @@ LANGUAGE ~Simplified Chinese (translation: Lewis Liu)~
 	     ~IWD_EET_integration/lang/en_US/setup.tra~
 	     ~IWD_EET_integration/lang/en_US/soa_easter_egg.tra~
 	     ~IWD_EET_integration/lang/en_US/Gui.tra~
+	     ~IWD_EET_integration/lang/en_US/how_integration.tra~
 	     ~IWD_EET_integration/lang/zh_CN/setup.tra~
 	     ~IWD_EET_integration/lang/zh_CN/soa_easter_egg.tra~
 	     ~IWD_EET_integration/lang/zh_CN/Gui.tra~
@@ -169,14 +174,58 @@ INCLUDE ~%MOD_FOLDER%/lib/soa_easter_egg.tpa~
 ////////////////////
 
 
-BEGIN @999998014 /* Add NWN after IWD1 Campaign */
+BEGIN ~Play Heart of Winter before NWN (Will send you back to HoW if not completed after IWD1 final)~ // @999998014 /* Add NWN after IWD1 Campaign */
+REQUIRE_PREDICATE (MOD_IS_INSTALLED ~SETUP-IWD_EET_integration.TP2~ ~100~) @999998005 /* IWD1 Campaign required */
 REQUIRE_PREDICATE (MOD_IS_INSTALLED ~SETUP-IWD1_EET.TP2~ ~1~) @999998004 /* IWD1_EET required */
-REQUIRE_PREDICATE (MOD_IS_INSTALLED ~SETUP-NWNFORBG.TP2~ ~0~) @999998004 /* IWD1_EET required */
-DESIGNATED 180
-LABEL ~D5_IWD1_NWN_INTEGRATION~
+REQUIRE_PREDICATE (MOD_IS_INSTALLED ~SETUP-NWNFORBG.TP2~ ~0~) ~NWNFORBG main componant required~
+REQUIRE_PREDICATE (MOD_IS_INSTALLED ~SETUP-NWNFORBG.TP2~ ~11~ OR MOD_IS_INSTALLED ~SETUP-NWNFORBG.TP2~ ~10~) ~Need componant "Place NWN locations on BP-BGT Worldmap" or  componant "Use separate worldmap for NWN areas" from NWNinBG need to be installed~
+DESIGNATED 181
+LABEL ~D5_IWD1_NWN_INTEGRATION_HoW~
+SUBCOMPONENT ~Add NWN after IWD1 separate campaign~
 
-INCLUDE ~%MOD_FOLDER%/lib/iwd-nwn_integration.tpa~
+ACTION_IF MOD_IS_INSTALLED ~SETUP-NWNFORBG.TP2~ 11 BEGIN
 
+COPY ~%MOD_FOLDER%/lib/iwd-nwn_integration.tpa~ ~weidu_external/backup/%MOD_FOLDER%/iwd-nwn_integration.tpa~
+REPLACE_TEXTUALLY ~//SetWorldmap("nwnworld")~ ~SetWorldmap("nwnworld")~
+REPLACE_TEXTUALLY ~//Global("IWDEET_HOW_COMPLETE","GLOBAL",1)~ ~Global("IWDEET_HOW_COMPLETE","GLOBAL",1)~
+
+INCLUDE ~weidu_external/backup/%MOD_FOLDER%/iwd-nwn_integration.tpa~
+
+END ELSE ACTION_IF MOD_IS_INSTALLED ~SETUP-NWNFORBG.TP2~ 10 BEGIN
+
+COPY ~%MOD_FOLDER%/lib/iwd-nwn_integration.tpa~ ~weidu_external/backup/%MOD_FOLDER%/iwd-nwn_integration.tpa~
+REPLACE_TEXTUALLY ~//SetWorldmap("nwnworld")~ ~SetWorldmap("worldmap")~
+REPLACE_TEXTUALLY ~//Global("IWDEET_HOW_COMPLETE","GLOBAL",1)~ ~Global("IWDEET_HOW_COMPLETE","GLOBAL",1)~
+
+INCLUDE ~weidu_external/backup/%MOD_FOLDER%/iwd-nwn_integration.tpa~
+
+END
+
+
+BEGIN ~Do whatever you want (Will send you to NWN even if HoW is not completed after IWD1 final)~ // @999998014 /* Add NWN after IWD1 Campaign */
+REQUIRE_PREDICATE (MOD_IS_INSTALLED ~SETUP-IWD_EET_integration.TP2~ ~100~) @999998005 /* IWD1 Campaign required */
+REQUIRE_PREDICATE (MOD_IS_INSTALLED ~SETUP-IWD1_EET.TP2~ ~1~) @999998004 /* IWD1_EET required */
+REQUIRE_PREDICATE (MOD_IS_INSTALLED ~SETUP-NWNFORBG.TP2~ ~0~) ~NWNFORBG main componant required~
+REQUIRE_PREDICATE (MOD_IS_INSTALLED ~SETUP-NWNFORBG.TP2~ ~11~ OR MOD_IS_INSTALLED ~SETUP-NWNFORBG.TP2~ ~10~) ~Need componant "Place NWN locations on BP-BGT Worldmap" or  componant "Use separate worldmap for NWN areas" from NWNinBG need to be installed~
+DESIGNATED 182
+LABEL ~D5_IWD1_NWN_INTEGRATION_HoW-Free~
+SUBCOMPONENT ~Add NWN after IWD1 separate campaign~
+
+ACTION_IF MOD_IS_INSTALLED ~SETUP-NWNFORBG.TP2~ 11 BEGIN
+
+COPY ~%MOD_FOLDER%/lib/iwd-nwn_integration.tpa~ ~weidu_external/backup/%MOD_FOLDER%/iwd-nwn_integration.tpa~
+REPLACE_TEXTUALLY ~//SetWorldmap("nwnworld")~ ~SetWorldmap("nwnworld")~
+
+INCLUDE ~weidu_external/backup/%MOD_FOLDER%/iwd-nwn_integration.tpa~
+
+END ELSE ACTION_IF MOD_IS_INSTALLED ~SETUP-NWNFORBG.TP2~ 10 BEGIN
+
+COPY ~%MOD_FOLDER%/lib/iwd-nwn_integration.tpa~ ~weidu_external/backup/%MOD_FOLDER%/iwd-nwn_integration.tpa~
+REPLACE_TEXTUALLY ~//SetWorldmap("nwnworld")~ ~SetWorldmap("worldmap")~
+
+INCLUDE ~weidu_external/backup/%MOD_FOLDER%/iwd-nwn_integration.tpa~
+
+END
 
 ////////////////////
 ////////////////////
